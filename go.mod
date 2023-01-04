@@ -1,3 +1,3 @@
-module github.com/dchest/captcha
+module github.com/coderMrz/captcha
 
 go 1.18
