@@ -34,7 +34,7 @@ type Image struct {
 // NewImage returns a new captcha image of the given width and height with the
 // given digits, where each digit must be in range 0-9.
 func NewImage(id string, digits []byte, width, height int) *Image {
-	m := new(Image)
+		m := new(Image)
 
 	// Initialize PRNG.
 	m.rng.Seed(deriveSeed(imageSeedPurpose, id, digits))
@@ -42,7 +42,7 @@ func NewImage(id string, digits []byte, width, height int) *Image {
 	m.Paletted = image.NewPaletted(image.Rect(0, 0, width, height), m.getRandomPalette())
 	m.calculateSizes(width, height, len(digits))
 	// Randomly position captcha inside the image.
-	maxx := width - (m.numWidth+m.dotSize)*len(digits) - m.dotSize
+	//maxx := width - (m.numWidth+m.dotSize)*len(digits) - m.dotSize
 	maxy := height - m.numHeight - m.dotSize*2
 	var border int
 	if width > height {
@@ -50,17 +50,19 @@ func NewImage(id string, digits []byte, width, height int) *Image {
 	} else {
 		border = width / 5
 	}
-	x := m.rng.Int(border, maxx-border)
+	//x := m.rng.Int(border, maxx-border)
+	x := 20
 	y := m.rng.Int(border, maxy-border)
 	// Draw digits.
 	for _, n := range digits {
 		m.drawDigit(font[n], x, y)
-		x += m.numWidth + m.dotSize
+		x += 22
+		//x += m.numWidth + m.dotSize + 10
 	}
 	// Draw strike-through line.
-	m.strikeThrough()
+	//m.strikeThrough()
 	// Apply wave distortion.
-	m.distort(m.rng.Float(5, 10), m.rng.Float(100, 200))
+	//m.distort(m.rng.Float(5, 10), m.rng.Float(100, 200))
 	// Fill image with random circles.
 	m.fillWithCircles(circleCount, m.dotSize)
 	return m
